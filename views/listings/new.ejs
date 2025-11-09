@@ -1,0 +1,102 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row mt-5">
+  <div class="col-8 offset-2">
+    <h2>Create new route</h2>
+
+    <form
+      action="/listing"
+      method="post"
+      novalidate
+      class="needs-validation"
+      enctype="multipart/form-data"
+    >
+      <div class="mb-3 mt-3">
+        <label for="title" class="form-label">Title:</label>
+        <input
+          type="text"
+          name="listing[title]"
+          placeholder="Add a catchy title"
+          id="title"
+          class="form-control"
+          pattern="[A-Za-z\s]+"
+          required
+        />
+        <div class="invalid-feedback">
+          Please enter a valid title(letters only (A–Z or a–z)).
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea
+          name="listing[description]"
+          id="description"
+          placeholder="enter description"
+          class="form-control"
+          pattern="[A-Za-z\s]+"
+          required
+        ></textarea>
+        <div class="invalid-feedback">Please enter a valid describtion.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="image" class="form-label">Upload image:</label>
+        <input
+          type="file"
+          name="listing[image]"
+          id="image"
+          class="form-control"
+          accept="image/*"
+          required
+        />
+        <div class="valid-feedback">upload image</div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label for="price" class="form-label">Price:</label>
+          <input
+            type="number"
+            name="listing[price]"
+            id="price"
+            placeholder="2500 for 2 nights."
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">give price details</div>
+        </div>
+        <div class="mb-3 col-md-8">
+          <label for="country" class="form-label">Country:</label>
+          <input
+            type="text"
+            name="listing[country]"
+            id="country"
+            placeholder="India"
+            class="form-control"
+            pattern="[A-Za-z\s]+"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid country name.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="location" class="form-label">Location:</label>
+        <input
+          type="text"
+          name="listing[location]"
+          id="location"
+          placeholder="jaipur , rajsthan"
+          class="form-control"
+          pattern="^(?!\d+$)[A-Za-z0-9\s,.-]+$"
+          required
+        />
+        <div class="invalid-feedback">Please enter a valid location.</div>
+      </div>
+
+      <button type="submit" class="btn btn-outline-danger mt-3 mb-3">
+        Add
+      </button>
+    </form>
+  </div>
+</div>

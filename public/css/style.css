@@ -1,0 +1,114 @@
+body{
+    
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.container{
+    flex: 1;
+}
+.navbar{
+    height: 5rem;
+    background-color: white;
+}
+.fa-compass{
+    color: #fe424d;
+    font-size: 2rem;
+}
+.nav-link{
+    color: #222222 !important;
+    font-size: 1.2rem !important;
+    font-weight: 500 !important;
+}
+/* footer */
+.f-info{
+    height: 7.9rem;
+    text-align: center;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items:center;
+}
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+.f-info-socials i{
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+/* card styling */
+.listing-card{
+    border: none;
+    margin-bottom: 2rem;
+}
+.card-img-top{
+    width: 90%;
+    height: 13rem;
+    border-radius: 1rem;
+    object-fit: cover;
+}
+
+/* card effects */
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
+}
+.card-listing{
+    text-decoration: none;
+}
+
+/* show page */
+
+.card-btns{
+    display: flex;
+    width: 15rem;
+    justify-content: space-around;
+}
+
+/* map showing */
+/* 🌍 Airbnb-style Leaflet map */
+#map {
+  width: 100%;
+  height: 420px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  margin-bottom: 25px;
+  z-index: 0;
+}
+
+/* Responsive adjustment for smaller devices */
+@media (max-width: 768px) {
+  #map {
+    height: 300px;
+  }
+}
+
+/* Optional: give map container a border when empty */
+.map-container {
+  background: #f7f7f7;
+  border-radius: 16px;
+  padding: 10px;
+}
+#togglePOI {
+  border-radius: 30px;
+  padding: 8px 20px;
+  transition: 0.3s ease;
+}
+
+#togglePOI:hover {
+  transform: scale(1.05);
+}
+
