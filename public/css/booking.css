@@ -1,0 +1,162 @@
+/* booking.css - polished widget */
+.booking-widget-card { width: 100%; max-width: 380px; margin: 0 auto; font-family: 'Circular', system-ui, sans-serif; }
+.booking-form {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 12px 32px rgba(15,15,15,0.08);
+  border: 1px solid rgba(0,0,0,0.04);
+  overflow: visible;
+}
+
+.price-header { display:flex; justify-content:flex-start; align-items:flex-start; margin-bottom:12px; }
+.price-main { font-size:28px; font-weight:800; line-height:1; color:#0b0b0b; }
+.price-sub { font-size:14px; color:#6e6e6e; margin-top:6px; }
+
+.inputs-box { border:1px solid #e3e3e3; border-radius:10px; overflow: visible; background: #fafafa; }
+
+/* dates */
+.dates-row { display:flex; }
+.date-col { width:50%; padding:12px; box-sizing:border-box; border-right: 1px solid #e8e8e8; }
+.date-col:last-child { border-right: none; }
+.date-col label { display:block; font-size:11px; font-weight:700; color:#333; margin-bottom:6px; }
+.date-control { display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #e8e8e8; padding:8px 10px; border-radius:8px; }
+.date-control input[type="date"] { border: none; background: transparent; outline:none; font-size:14px; cursor:pointer; }
+.date-control i { color:#666; font-size:16px; }
+
+/* guests row */
+.guests-row { display:flex; justify-content:space-between; align-items:center; padding:12px; background:transparent; cursor:pointer; border-top:1px solid #e8e8e8; position:relative; }
+.guests-row:focus { outline: none; box-shadow: 0 0 0 3px rgba(229,29,85,0.06); border-radius:8px; }
+.guest-label label { font-size:11px; font-weight:700; color:#333; display:block; }
+.guest-value { font-size:14px; color:#333; margin-top:6px; }
+.chev i { color:#444; }
+
+/* dropdown */
+.guest-dropdown {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: calc(100% + 10px);
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 20px 40px rgba(10,10,10,0.12);
+  border: 1px solid #eee;
+  z-index: 9999;
+  transform-origin: top;
+  transform: translateY(-6px) scaleY(.98);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+.guest-dropdown.show { transform: translateY(0) scaleY(1); opacity:1; pointer-events:auto; }
+
+.guest-control-row { display:flex; justify-content:space-between; align-items:center; padding:8px; }
+.guest-type .gt-title { font-weight:700; }
+.guest-type small { color:#7a7a7a; }
+
+/* controls */
+.guest-controls { display:flex; align-items:center; gap:12px; }
+.guest-controls button { width:36px; height:36px; border-radius:50%; border:1px solid #e1e1e1; background:#fff; font-size:18px; line-height:1; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+.guest-controls button:disabled { opacity:0.35; cursor:not-allowed; }
+#guest-count-popup { min-width:20px; text-align:center; font-weight:600; }
+
+/* cancellation box + reserve */
+.cancellation-box { margin-top:12px; background:#f7f7f7; padding:10px; border-radius:8px; color:#333; font-size:14px; display:block; }
+.reserve-btn { width:100%; background: linear-gradient(180deg,#e91e5b,#d1164a); color:#fff; border:none; padding:14px; border-radius:28px; font-size:16px; font-weight:700; margin-top:14px; box-shadow: 0 12px 30px rgba(225,29,85,0.14); cursor:pointer; z-index:50; position:relative; }
+.reserve-btn:active { transform: translateY(1px); }
+.disclaimer { text-align:center; color:#8c8c8c; margin-top:10px; font-size:13px; }
+
+/* responsive */
+@media (max-width:480px) {
+  .booking-form { padding:14px; }
+  .price-main { font-size:22px; }
+  .guest-dropdown { left:8px; right:8px; }
+}
+
+
+/* ---------- Improved Offer preview / popup ---------- */
+.offer-summary {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  padding: .5rem .6rem;
+  border-radius: .6rem;
+  transition: box-shadow .18s ease, transform .12s ease;
+  margin-top: 12px;
+  width: fit-content;
+  background: transparent;
+  z-index: 1200; /* sit above most things */
+  isolation: isolate; /* keep stacking context local to avoid blending */
+}
+.offer-summary:hover { box-shadow: 0 10px 30px rgba(0,0,0,.06); transform: translateY(-2px); }
+.offer-badge {
+  background: linear-gradient(90deg,#ff4d6d,#ff2a6a);
+  color: #fff;
+  padding: .25rem .5rem;
+  border-radius: .5rem;
+  font-weight: 700;
+  font-size: .82rem;
+}
+.offer-preview { font-size: .95rem; line-height:1; color:#333; }
+.offer-preview small { display:block; font-size:.82rem; color:#6e6e6e; }
+
+/* popup: fully opaque, blurred backdrop, strong shadow, centered & responsive */
+.offer-popup {
+  display: none;
+  position: absolute;
+  top: 3.6rem;
+  left: 50%;
+  transform: translateX(-50%); /* center horizontally */
+  min-width: 18rem;
+  max-width: 28rem;
+  background: rgba(255,255,255,0.98); /* almost opaque */
+  border-radius: .75rem;
+  padding: 1rem;
+  box-shadow: 0 20px 50px rgba(15,15,15,.12);
+  z-index: 2000; /* ensure this is above everything */
+  font-size: .92rem;
+  border: 1px solid rgba(10,10,10,0.06);
+  pointer-events: auto;
+  backdrop-filter: blur(6px); /* subtle blur of background behind popup */
+  -webkit-backdrop-filter: blur(6px);
+  will-change: transform, opacity;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+/* small entrance effect */
+.offer-summary:hover .offer-popup,
+.offer-summary:focus .offer-popup {
+  display: block;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* fallback so it's invisible when not hovered (hide and slightly moved) */
+.offer-popup[aria-hidden="true"] { opacity: 0; transform: translateX(-50%) translateY(-6px); pointer-events: none; }
+
+.offer-list { margin: .4rem 0 .2rem 1rem; color:#333; }
+.muted { color: #777; font-size: .82rem; }
+
+/* discount tag next to price */
+.discount-tag {
+  font-weight: 700;
+  color: #d32f2f;
+  margin-left: .5rem;
+  font-size: .9rem;
+}
+
+/* Responsive: make popup full width on very small screens */
+@media (max-width: 520px) {
+  .offer-popup {
+    left: 8px;
+    right: 8px;
+    transform: none;
+    width: auto;
+    min-width: 0;
+    max-width: calc(100vw - 16px);
+    top: 3.2rem;
+  }
+}

@@ -21,6 +21,7 @@ import ExpressError from "./utils/expressError.js";
 import listingRouter from "./routes/listing.js";
 import reviewRouter from "./routes/review.js";
 import userRouter from "./routes/user.js";
+import bookingRouter from "./routes/booking.js";
 import { error } from "console";
 
 const app = express();
@@ -53,6 +54,7 @@ main()
 
 async function main() {
   await mongoose.connect(process.env.ATLASDB_URL);
+  //  await mongoose.connect("mongodb://127.0.0.1:27017/wonderlust");
 }
 
 //sessions
@@ -115,6 +117,8 @@ app.use((req, res, next) => {
 app.use("/listing", listingRouter);
 app.use("/listing/:id/reviews", reviewRouter);
 app.use("/user", userRouter);
+
+app.use("/", bookingRouter);
 
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));

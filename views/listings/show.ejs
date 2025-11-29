@@ -1,44 +1,208 @@
 <% layout("/layouts/boilerplate") %>
+<div class="show-page">
+  <div class="row mt-3">
+    <!-- LISTING DETAILS COLUMN -->
+    <div class="col-12 col-md-6 mb-3">
+      <h2 class="h2 mb-3"><%= listing.title %></h2>
+      <div class="card listing-card">
+        <img src="<%= listing.image.url %>" class="card-img-top" alt="image" />
+        <div class="card-body">
+          <i><b>Owned By <%= listing.owner.username %></b></i>
+          <p class="card-text"><%= listing.description %></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <b>Price:</b> &#8377;<%= listing.price.toLocaleString("en-IN") %>
+            for 2 nights
+          </li>
+          <li class="list-group-item">
+            <b>Location:</b> <%= listing.location %>
+          </li>
+          <li class="list-group-item">
+            <b>Country:</b> <%= listing.country %>
+          </li>
+        </ul>
 
-<div class="row mt-3">
-  <div class="col-8 offset-2 mb-3">
-    <h2 class="h2 mb-3"><%= listing.title %>.</h2>
-    <div class="card listing-card" style="width: 40rem">
-      <img
-        src=" <%=listing.image.url %>"
-        class="card-img-top"
-        alt="image"
-        style="width: 40rem; height: 25rem"
-      />
-      <div class="card-body">
-        <h5 class="card-title"></h5>
-        <i><b>owned By⁓ <%= listing.owner.username %></b></i>
-        <p class="card-text"><%= listing.description %></p>
+        <% if(currentUser && currentUser._id.equals(listing.owner._id)){ %>
+        <div class="card-btns p-3 d-flex gap-2">
+          <a
+            href="/listing/<%= listing._id %>/edit"
+            class="btn btn-outline-info"
+            >Edit</a
+          >
+          <form action="/listing/<%=listing._id%>?_method=delete" method="post">
+            <button class="btn btn-outline-danger">Delete</button>
+          </form>
+        </div>
+        <% } %>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <b>price:</b>&#8377;<%= listing.price %> for 2 nights
-        </li>
-        <li class="list-group-item"><b>location:</b><%=listing.location %></li>
-        <li class="list-group-item"><b>country:</b><%= listing.country %></li>
-      </ul>
-      <% if( currentUser && currentUser._id.equals(listing.owner._id)){ %>
-      <div class="card-btns">
-        <a
-          href="/listing/<%= listing._id %>/edit"
-          class="btn btn-outline-info mt-3 mb-3"
-          >Edit</a
+    </div>
+
+    <!-- BOOKING WIDGET COLUMN -->
+    <div
+      class="col-12 col-md-6 mb-3 mt-3 mt-md-5 d-flex align-items-start justify-content-center"
+    >
+      <div class="booking-widget-card">
+        <form
+          action="/listing/<%= listing._id %>/bookings"
+          method="POST"
+          id="bookingForm"
+          class="booking-form"
         >
-        <form action="/listing/<%=listing._id%>?_method=delete" method="post">
-          <button class="btn btn-outline-danger mt-3 mb-3">Delete</button>
+          <!-- Price header -->
+          <div class="price-header">
+            <div>
+              <div id="price-total" class="price-main">
+                ₹<%= listing.price.toLocaleString("en-IN") %>
+              </div>
+              <div id="night-label" class="price-sub">for 1 night</div>
+            </div>
+          </div>
+
+          <!-- Offer summary (hover to view rules) -->
+          <div
+            class="offer-summary"
+            id="offerSummary"
+            tabindex="0"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <div class="offer-badge">Offers</div>
+            <div class="offer-preview">
+              <strong>Save up to 20%</strong>
+              <small class="muted">for longer stays</small>
+            </div>
+
+            <div class="offer-popup" id="offerPopup" aria-hidden="true">
+              <h6>Special Offers</h6>
+              <ul class="offer-list">
+                <li>5% off — stays longer than 2 nights</li>
+                <li>10% off — stays longer than 7 nights</li>
+                <li>20% off — stays longer than 30 nights</li>
+              </ul>
+              <small class="muted"
+                >Discount applied automatically when dates selected</small
+              >
+            </div>
+          </div>
+
+          <!-- Expose site-wide offers to the client (no backend change) -->
+          <script>
+            window.siteOffers = [
+              {
+                minNights: 31,
+                pct: 20,
+                label: "20% off — stays longer than 30 nights",
+              },
+              {
+                minNights: 8,
+                pct: 10,
+                label: "10% off — stays longer than 7 nights",
+              },
+              {
+                minNights: 3,
+                pct: 5,
+                label: "5% off — stays longer than 2 nights",
+              },
+            ];
+          </script>
+
+          <!-- Inputs box -->
+          <div class="inputs-box">
+            <div class="dates-row">
+              <div class="date-col">
+                <label for="checkin-date">CHECK-IN</label>
+                <div class="date-control">
+                  <input type="date" id="checkin-date" required />
+                </div>
+              </div>
+              <div class="date-col">
+                <label for="checkout-date">CHECKOUT</label>
+                <div class="date-control">
+                  <input type="date" id="checkout-date" required />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="guests-row"
+              id="guest-toggle"
+              tabindex="0"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <div class="guest-label">
+                <label>GUESTS</label>
+                <div class="guest-value">
+                  <span id="guest-count">1</span> guest
+                </div>
+              </div>
+              <div class="chev"><i class="fa-solid fa-chevron-down"></i></div>
+
+              <div
+                class="guest-dropdown"
+                id="guest-dropdown"
+                aria-hidden="true"
+              >
+                <div class="guest-control-row">
+                  <div class="guest-type">
+                    <div class="gt-title">Adults</div>
+                    <small>Age 13+</small>
+                  </div>
+                  <div class="guest-controls">
+                    <button
+                      type="button"
+                      id="guest-minus"
+                      disabled
+                      aria-label="Decrease"
+                    >
+                      −
+                    </button>
+                    <span id="guest-count-popup">1</span>
+                    <button type="button" id="guest-plus" aria-label="Increase">
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="cancellation-box"
+            id="cancellation-box"
+            style="display: none"
+          >
+            Total for <span id="total-nights">0</span> nights
+          </div>
+
+          <!-- Hidden inputs -->
+          <input type="hidden" name="booking[checkIn]" id="hidden-checkin" />
+          <input type="hidden" name="booking[checkOut]" id="hidden-checkout" />
+          <input
+            type="hidden"
+            name="booking[guests]"
+            id="hidden-guests"
+            value="1"
+          />
+          <input type="hidden" name="booking[totalPrice]" id="hidden-price" />
+
+          <button type="submit" class="reserve-btn" id="reserveBtn">
+            Reserve
+          </button>
+          <div class="disclaimer">You won't be charged yet</div>
         </form>
       </div>
-      <% } %>
     </div>
   </div>
+
   <hr />
-  <% if( currentUser){ %>
-  <div class="col-8 offset-2 mb-3">
+
+  <!-- REVIEWS SECTION -->
+  <% if(currentUser){ %>
+  <div class="col-12 col-md-8 offset-md-2 mb-3">
     <h4>Leave a Review</h4>
     <form
       action="/listing/<%= listing._id %>/reviews"
@@ -46,6 +210,7 @@
       novalidate
       class="needs-validation"
     >
+      <!-- Star Rating -->
       <div>
         <fieldset class="starability-heartbeat">
           <input
@@ -57,7 +222,6 @@
             checked
             aria-label="No rating."
           />
-
           <input
             type="radio"
             id="first-rate1"
@@ -95,7 +259,7 @@
           <label for="first-rate5" title="Amazing">5 stars</label>
         </fieldset>
       </div>
-
+      <!-- Comment -->
       <div class="form-floating">
         <textarea
           class="form-control"
@@ -106,17 +270,19 @@
           required
         ></textarea>
         <div class="invalid-feedback">Please write your worthy feedback.</div>
-        <label for="floatingTextarea2">comments</label>
+        <label for="floatingTextarea2">Comments</label>
       </div>
-
       <button type="submit" class="btn btn-outline-primary mt-3">Submit</button>
     </form>
   </div>
-  <% } %> <% if(listing.reviews.length>0){ %>
-  <div class="row">
-    <h4>All Reviews</h4>
+  <% } %>
+
+  <!-- Display Reviews -->
+  <% if(listing.reviews.length > 0){ %>
+  <div class="row reviews-row col-12 col-md-10 offset-md-1">
+    <h4 class="col-12">All Reviews</h4>
     <% for(review of listing.reviews){ %>
-    <div class="card col-5 mb-3 ms-3">
+    <div class="card review-card">
       <div class="card-body">
         <h5 class="card-title">@<%= review.author.username %></h5>
         <p
@@ -124,13 +290,14 @@
           data-rating="<%= review.rating%>"
         ></p>
         <p class="card-text"><%= review.comment%></p>
-
+        <% if(currentUser && currentUser._id.equals(review.author._id)){ %>
         <form
           action="/listing/<%= listing._id %>/reviews/<%= review._id %>?_method=delete"
           method="post"
         >
           <button class="btn btn-outline-danger mt-2 mb-2">Delete</button>
         </form>
+        <% } %>
       </div>
     </div>
     <% } %>
@@ -138,13 +305,12 @@
   <hr />
   <% } %>
 
-  <div class="col-8 offset-2 mb-3">
+  <!-- Map Section -->
+  <div class="col-12 col-md-8 offset-md-2 mb-3">
     <h3>Where you’ll be</h3>
-
     <div class="map-container">
       <div id="map"></div>
     </div>
-
     <div class="text-center mt-3">
       <button id="togglePOI" class="btn btn-outline-success">
         <i class="fa-solid fa-location-dot"></i> Show Nearby Attractions
@@ -152,7 +318,8 @@
     </div>
   </div>
 
+  <!-- Pass price to JS -->
   <script>
-    window.listingData = <%- JSON.stringify(listing) %>;
+    window.listingData = { price: <%= listing.price %> };
   </script>
 </div>

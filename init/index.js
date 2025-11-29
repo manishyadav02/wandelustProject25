@@ -9,7 +9,10 @@ main()
   .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/wonderlust");
+  // await mongoose.connect("mongodb://127.0.0.1:27017/wonderlust");
+  await mongoose.connect(process.env.ATLASDB_URL);
+  
+
 }
 
 const initDB = async () => {
@@ -21,4 +24,4 @@ const initDB = async () => {
   await Listing.insertMany(modifiedData);
   console.log(`data was initialized successfully`);
 };
-initDB();
+

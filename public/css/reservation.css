@@ -1,0 +1,176 @@
+/* =========================================
+   MY RESERVATIONS PAGE STYLES
+   ========================================= */
+
+/* --- Empty State --- */
+.empty-state-container {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f7f7f7;
+    border-radius: 16px;
+    margin-top: 20px;
+}
+
+.empty-icon { 
+    font-size: 48px; 
+    margin-bottom: 16px; 
+    display: block; 
+}
+
+.empty-state-container h4 { 
+    font-weight: 600; 
+    color: #222; 
+    margin-bottom: 8px;
+}
+
+.empty-state-container p { 
+    color: #717171; 
+    margin-bottom: 24px; 
+}
+
+.btn-explore {
+    background-color: #222;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.1s ease, background-color 0.2s;
+}
+
+.btn-explore:hover { 
+    background-color: #000; 
+    color: white; 
+    transform: scale(1.02);
+}
+
+/* --- Reservation Card --- */
+.reservation-card {
+    border: 1px solid #ebebeb;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    background: white;
+    height: 100%; /* Ensures all cards in a row are same height */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.reservation-card:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+    border-color: transparent;
+}
+
+/* Image Area */
+.card-img-wrapper {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.reservation-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.reservation-card:hover .reservation-img {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.reservation-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #222;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Card Body */
+.reservation-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.reservation-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Info Rows */
+.reservation-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+}
+
+.info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: #717171;
+}
+
+.info-icon { 
+    font-size: 16px; 
+    min-width: 20px; 
+    text-align: center;
+}
+
+.price-row {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+    align-items: center;
+}
+
+.info-price {
+    color: #222;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.info-label {
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 4px;
+}
+
+/* Cancel Button */
+.btn-cancel {
+    width: 100%;
+    border: 1px solid #dddddd;
+    background: white;
+    color: #222;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    margin-top: auto; /* Pushes button to bottom */
+}
+
+.btn-cancel:hover {
+    background: #fff8f8;
+    border-color: #E51D55; /* Airbnb Red */
+    color: #E51D55;
+}
